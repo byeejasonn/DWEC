@@ -1,5 +1,5 @@
 const contenido = document.getElementById('contenido');
-let nombre = "Jason Londoño";
+let nombre = "Jason";
 
 contenido.innerHTML = nombre;
 
@@ -9,4 +9,4 @@ for (let i = 0; i <= 10; i++) {
     (i%2 == 0)?console.log(i):'';
 }
 
-//console.log(resultado);
+console.log(nombre[2]);
