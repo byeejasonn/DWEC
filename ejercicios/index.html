@@ -19,6 +19,18 @@
         main > div {
             margin: 14px 0;
         }
+
+        .ejercicios {
+            display: grid;
+            grid-template-columns: 100px 150px;
+            width: 400px;
+            gap: 10px 20px;
+        }
+
+        .solucion {
+            display: grid;
+            grid-template-columns: 250px;
+        }
     </style>
 </head>
 <body>
@@ -28,33 +40,47 @@
 
         # Estructuras secuenciales de programación
         2. Realizar la carga del radio de una circunferencia, mostrar porpantalla el area de este.
-        3. Escribir un programa en el cual se ingresen la edades de 4 personas, calcular la suma del mayo y del menor junto al producto del tercero con el segundo.
+        3. Escribir un programa en el cual se ingresen la edades de 4 personas, calcular la suma del mayor y del menor junto al producto del tercero con el segundo.
         4. Solicitar por teclado ingresar los lados de un cuadrado y mostrar por pantalla el perímetro.
         5. Se debe desarrollar un programa que pida el ingreso del precio de un articulo y la cantidad que lleva el cliente. Mostrar lo que debe abonar el compreador (ingresar pro teclado un precio sin decimales.)
      -->
      <main>
-         <div class="ejercicio1">
-            <label for="user">Usuario: </label><input type="text" placeholder="usuario" id="user" name="user"><br>
-            <label for="mail">Email: </label><input type="email" placeholder="mail@mail.com" name="mail" id="mail"><br>
+        <h3>Ejercicio 1</h3>
+         <div id="ejercicio1" class="ejercicios">
+            <label for="user">Usuario: </label><input type="text" placeholder="usuario" id="user" name="user">
+            <label for="mail">Email: </label><input type="email" placeholder="mail@mail.com" id="mail" name="mail">
             <input type="button" value="ejercicio1" onclick="ejercicio1()">
-            <div class="solucion1"></div>
         </div>
-         <div class="ejercicio2">
+        <div class="solucion1 solucion"></div>
+
+        <h3>Ejercicio 2</h3>
+        <div id="ejercicio2" class="ejercicios">
+            <label for="radio">Radio: </label><input type="number" placeholder="1.2" id="radio" name="radio">
             <input type="button" value="ejercicio2" onclick="ejercicio2()">
-            <div class="solucion2"></div>
         </div>
-         <div class="ejercicio3">
+        <div class="solucion2 solucion"></div>
+
+        <h3>Ejercicio 3</h3>
+        <div id="ejercicio3" class="ejercicios">
+            <label for="persona1">Persona 1: </label><input type="number" id="persona1" name="persona1" class="personas" min="0">
+            <label for="persona2">Persona 2: </label><input type="number" id="persona2" name="persona2" class="personas" min="0">
+            <label for="persona3">Persona 3: </label><input type="number" id="persona3" name="persona3" class="personas" min="0">
+            <label for="persona4">Persona 4: </label><input type="number" id="persona4" name="persona4" class="personas" min="0">
             <input type="button" value="ejercicio3" onclick="ejercicio3()">
-            <div class="solucion3"></div>
         </div>
-         <div class="ejercicio4">
+        <div class="solucion3 solucion"></div>
+
+        <h3>Ejercicio 4</h3>
+        <div id="ejercicio4" class="ejercicios">
             <input type="button" value="ejercicio4" onclick="ejercicio4()">
-            <div class="solucion4"></div>
         </div>
-         <div class="ejercicio5">
+        <div class="solucion4 solucion"></div>
+
+        <h3>Ejercicio 5</h3>
+        <div id="ejercicio5" class="ejercicios">
             <input type="button" value="ejercicio5" onclick="ejercicio5()">
-            <div class="solucion5"></div>
         </div>
+        <div class="solucion5 solucion"></div>
      </main>
 
      <script>
@@ -77,10 +103,40 @@
         function ejercicio2() {
             const container = document.querySelector('.solucion2');
 
-            
+            const radio = document.getElementById('radio').value;
+            let area = Math.PI * Math.pow(radio,2);
+
+            container.innerHTML = `
+                <span>Área: ${area}</span>
+            `
         }
 
         function ejercicio3() {
+            const container = document.querySelector('.solucion3');
+            const personas = document.querySelectorAll('.personas');
+
+            let error = false;
+
+            let edades = [];
+
+            personas.forEach(persona => {
+                edades.push(parseInt((persona.value)));
+                if(persona.value == '') error = true;
+            });
+
+            let max = Math.max(...edades);
+            let min = Math.min(...edades);
+
+            if(error) {
+                container.innerHTML = `
+                    <span>Falta alguna edad</span>
+                `
+            } else {
+                container.innerHTML = `
+                    <span>Suma mayor y menor: ${max + min}</span>
+                    <span>Producto tercero y segundo: ${edades[1]*edades[2]}</span>
+                `
+            }
             
         }
 
