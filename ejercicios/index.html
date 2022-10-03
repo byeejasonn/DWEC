@@ -11,6 +11,14 @@
             padding: 0;
             font-family: Arial;
         }
+
+        main {
+            margin: 0 50px;
+        }
+
+        main > div {
+            margin: 14px 0;
+        }
     </style>
 </head>
 <body>
@@ -24,34 +32,34 @@
         4. Solicitar por teclado ingresar los lados de un cuadrado y mostrar por pantalla el perímetro.
         5. Se debe desarrollar un programa que pida el ingreso del precio de un articulo y la cantidad que lleva el cliente. Mostrar lo que debe abonar el compreador (ingresar pro teclado un precio sin decimales.)
      -->
-
-     <div class="ejercicio1">
-        <label for="user">Usuario: </label><input type="text" placeholder="usuario" id="user" name="user"><br>
-        <label for="mail">Email: </label><input type="email" placeholder="mail@mail.com" name="mail" id="mail"><br>
-        <input type="button" value="ejercicio1" onclick="ejercicio1()">
-        <div class="solucion1"></div>
-    </div>
-     <div class="ejercicio2">
-        <input type="button" value="ejercicio2" onclick="ejercicio2()">
-        <div class="solucion2"></div>
-    </div>
-     <div class="ejercicio3">
-        <input type="button" value="ejercicio3" onclick="ejercicio3()">
-        <div class="solucion3"></div>
-    </div>
-     <div class="ejercicio4">
-        <input type="button" value="ejercicio4" onclick="ejercicio4()">
-        <div class="solucion4"></div>
-    </div>
-     <div class="ejercicio5">
-        <input type="button" value="ejercicio5" onclick="ejercicio5()">
-        <div class="solucion5"></div>
-    </div>
+     <main>
+         <div class="ejercicio1">
+            <label for="user">Usuario: </label><input type="text" placeholder="usuario" id="user" name="user"><br>
+            <label for="mail">Email: </label><input type="email" placeholder="mail@mail.com" name="mail" id="mail"><br>
+            <input type="button" value="ejercicio1" onclick="ejercicio1()">
+            <div class="solucion1"></div>
+        </div>
+         <div class="ejercicio2">
+            <input type="button" value="ejercicio2" onclick="ejercicio2()">
+            <div class="solucion2"></div>
+        </div>
+         <div class="ejercicio3">
+            <input type="button" value="ejercicio3" onclick="ejercicio3()">
+            <div class="solucion3"></div>
+        </div>
+         <div class="ejercicio4">
+            <input type="button" value="ejercicio4" onclick="ejercicio4()">
+            <div class="solucion4"></div>
+        </div>
+         <div class="ejercicio5">
+            <input type="button" value="ejercicio5" onclick="ejercicio5()">
+            <div class="solucion5"></div>
+        </div>
+     </main>
 
      <script>
         function ejercicio1() {
             const container = document.querySelector('.solucion1');
-            console.log(container);
 
             const user = document.getElementById('user').value;
             const mail = document.getElementById('mail').value;
@@ -64,6 +72,24 @@
             } else {
                 container.innerHTML = `Usuario o mail vacio`
             }
+        }
+
+        function ejercicio2() {
+            const container = document.querySelector('.solucion2');
+
+            
+        }
+
+        function ejercicio3() {
+            
+        }
+
+        function ejercicio4() {
+            
+        }
+
+        function ejercicio5() {
+            
         }
      </script>
 </body>
