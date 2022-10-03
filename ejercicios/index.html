@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        # Entrada de datos por teclado
+        1. Confeccionar un programa que permita cargar el nombre de un usuario y su mail por teclado. Mostrar posteriormente los datos en la pagina HTML
+
+        # Estructuras secuenciales de programación
+        2. Realizar la carga del radio de una circunferencia, mostrar porpantalla el area de este.
+        3. Escribir un programa en el cual se ingresen la edades de 4 personas, calcular la suma del mayo y del menor junto al producto del tercero con el segundo.
+        4. Solicitar por teclado ingresar los lados de un cuadrado y mostrar por pantalla el perímetro.
+        5. Se debe desarrollar un programa que pida el ingreso del precio de un articulo y la cantidad que lleva el cliente. Mostrar lo que debe abonar el compreador (ingresar pro teclado un precio sin decimales.)
+     -->
+
+     <div class="ejercicio1">
+        <label for="user">Usuario: </label><input type="text" placeholder="usuario" id="user" name="user"><br>
+        <label for="mail">Email: </label><input type="email" placeholder="mail@mail.com" name="mail" id="mail"><br>
+        <input type="button" value="ejercicio1" onclick="ejercicio1()">
+        <div class="solucion1"></div>
+    </div>
+     <div class="ejercicio2">
+        <input type="button" value="ejercicio2" onclick="ejercicio2()">
+        <div class="solucion2"></div>
+    </div>
+     <div class="ejercicio3">
+        <input type="button" value="ejercicio3" onclick="ejercicio3()">
+        <div class="solucion3"></div>
+    </div>
+     <div class="ejercicio4">
+        <input type="button" value="ejercicio4" onclick="ejercicio4()">
+        <div class="solucion4"></div>
+    </div>
+     <div class="ejercicio5">
+        <input type="button" value="ejercicio5" onclick="ejercicio5()">
+        <div class="solucion5"></div>
+    </div>
+
+     <script>
+        function ejercicio1() {
+            const container = document.querySelector('.solucion1');
+            console.log(container);
+
+            const user = document.getElementById('user').value;
+            const mail = document.getElementById('mail').value;
+
+            if(user != '' && mail != '') {
+                container.innerHTML = `
+                    <span>Usuario: ${user}</span><br>
+                    <span>Email: ${mail}</span><br>
+                `
+            } else {
+                container.innerHTML = `Usuario o mail vacio`
+            }
+        }
+     </script>
+</body>
+</html>

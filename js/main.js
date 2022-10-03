@@ -16,13 +16,13 @@ const pic = document.getElementById('pic');
 
 // funciones para cambiar la foto
 function gojo() {
-    src = './img/gojo.webp';
+    let src = './img/gojo.webp';
 
     pic.src = src;
 }
 
 function yuta() {
-    src = './img/yuta.webp';
+    let src = './img/yuta.webp';
 
     pic.src = src;
 }
