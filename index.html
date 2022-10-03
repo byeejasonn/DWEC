@@ -5,13 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
+    <style>
+        #pic {
+            width: 250px;
+        }
+    </style>
+
     <script src="./js/main.js" defer></script>
 </head>
 <body>
-    
+
     <h2>DWEC</h2>
 
     <div id="contenido"></div>
+
+    <section>
+        <h2>What Can JavaScript Do?</h2>
+        <p>JavaScript can change HTML attribute values.</p>
+        <p>In this case JavaScript changes the value fd the src (source) attribute of an image.</p>
+        <div class="inputs">
+            <input type="button" value="Gojo" onclick="gojo()">
+            <input type="button" value="Yuta" onclick="yuta()">
+        </div>
+        <br>
+        <img src="./img/gojo.webp" id="pic">
+
+    </section>
 
 </body>
 </html>

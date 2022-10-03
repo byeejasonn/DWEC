@@ -1,3 +1,4 @@
+// cosas basicas
 const contenido = document.getElementById('contenido');
 let nombre = "Jason";
 
@@ -10,3 +11,18 @@ for (let i = 0; i <= 10; i++) {
 }
 
 console.log(nombre[2]);
+
+const pic = document.getElementById('pic');
+
+// funciones para cambiar la foto
+function gojo() {
+    src = './img/gojo.webp';
+
+    pic.src = src;
+}
+
+function yuta() {
+    src = './img/yuta.webp';
+
+    pic.src = src;
+}
