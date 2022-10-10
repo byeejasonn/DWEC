@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios I</title>
+</head>
+<body>
+    <section>
+        <h2>Ejercicio1</h2>
+
+        <div class="inputs">
+            <label for="numero1">Numero 1: </label><input type="number" name="numero1" id="numero1" step="1"><br>
+            <label for="numero2">Numero 2: </label><input type="number" name="numero2" id="numero2" step="1"><br>
+            <label for="numero3">Numero 3: </label><input type="number" name="numero3" id="numero3" step="1"><br>
+        </div>
+
+        <button id="ejercicio1" onclick="ejercicio1()">Ordenar</button>
+
+        <div class="solucion1"></div>
+    </section>
+
+    <section>
+        <h2>Ejercicio2</h2>
+
+        <div class="inputs">
+                <label for="numero09999">Numero: </label><input type="number" name="numero09999" id="numero09999" min="0" max="9999" step="1"><br>
+        </div>
+
+        <button id="ejercicio2" onclick="ejercicio2()">Cifras</button>
+
+        <div class="solucion2"></div>
+    </section>
+
+    <section>
+        <h2>Ejercicio3</h2>
+
+        <div class="inputs">
+                <label for="numero09999-2">Numero: </label><input type="number" name="numero09999-2" id="numero09999-2" min="0" max="9999" step="1"><br>
+        </div>
+
+        <button id="ejercicio3" onclick="ejercicio3()">Al reves</button>
+
+        <div class="solucion3"></div>
+    </section>
+
+    <section>
+        <h2>Ejercicio4</h2>
+
+        <div class="inputs">
+                <label for="capicua">Numero: </label><input type="number" name="capicua" id="capicua" min="0" max="9999" step="1"><br>
+        </div>
+
+        <button id="ejercicio4" onclick="ejercicio4()">Capicua</button>
+
+        <div class="solucion4"></div>
+    </section>
+
+
+    <script>
+
+        function ejercicio1() {
+            const solucion = document.querySelector('.solucion1');
+            
+            let error = false;
+            let numeros = [
+                parseInt(document.getElementById('numero1').value),
+                parseInt(document.getElementById('numero2').value),
+                parseInt(document.getElementById('numero3').value),
+            ];
+
+            numeros.forEach(numero => {
+                if(isNaN(numero)) error = true;
+            });
+
+            // js ordena por defecto mediante string --
+            numeros.sort(function (a, b) { return a - b}).reverse();
+
+            if(!error) {
+                solucion.innerHTML = "De mayor a menor: ";
+                numeros.forEach(numero => {
+                    solucion.innerHTML += `
+                        ${numero} 
+                    `
+                });
+            } else {
+                solucion.innerHTML = "Escriba un número";
+            }
+        }
+
+        function ejercicio2() {
+            const solucion = document.querySelector('.solucion2');
+
+            let error = false;
+            let numero = parseInt(document.getElementById('numero09999').value);
+            if(numero < 0 || numero > 9999 || isNaN(numero)) error = true;
+
+            if(!error) {
+                solucion.innerHTML = `
+                    El número tiene ${numero.toString().length} caracteres 
+                `
+            } else {
+                solucion.innerHTML = "Escriba un número valido"
+            }
+        } 
+
+        function ejercicio3() {
+            const solucion = document.querySelector('.solucion3');
+
+            let error = false;
+            let numero = parseInt(document.getElementById('numero09999-2').value);
+            if(numero < 0 || numero > 9999 || isNaN(numero)) error = true;
+
+            if(!error) {
+                solucion.innerHTML = `
+                    El número al reves es: ${numero.toString().split("").reverse().join("")} 
+                `
+            } else {
+                solucion.innerHTML = "Escriba un número valido"
+            }
+        }
+
+        function ejercicio4() {
+            const solucion = document.querySelector('.solucion4');
+            let capicua = false;
+
+            let error = false;
+            let numero = parseInt(document.getElementById('capicua').value);
+            if(numero < 0 || numero > 9999 || isNaN(numero)) error = true;
+            
+            if(!error) {
+                solucion.innerHTML = `
+                    El número ${(numero.toString() == numero.toString().split("").reverse().join(""))?'es capicua':'no es capicua'} 
+                `
+            } else {
+                solucion.innerHTML = "Escriba un número valido"
+            }
+        }
+    </script>
+</body>
+</html>

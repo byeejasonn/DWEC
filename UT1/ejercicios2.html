@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios II</title>
+    <style>
+        section {
+            margin: 20px;
+        }
+
+        .inputs{
+            margin: 10px 0;
+            display: grid;
+            grid-template-columns: 120px 100px;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h2>Conversion de grados</h2>
+
+        <label for="grados">Convertir a: </label>
+        <select name="grados" id="grados">
+            <option value="cel">Celcius</option>
+            <option value="far">Farenheit</option>
+        </select>
+
+        <div class="inputs">
+
+            <label for="inicio">Valor Inicial: </label><input type="number" name="inicio" id="inicio">
+            <label for="final">Valor final: </label><input type="number" name="final" id="final">
+
+        </div>
+
+        <button class="btn" onclick="conversor()">Calcular</button>
+
+        <div class="tabla"></div>
+
+    </section>
+
+    <script>
+        function conversor() {
+            const FAHRENHEIT = 32;
+
+            const divTabla = document.querySelector('.tabla');
+            divTabla.innerHTML = "";
+            const table = document.createElement('table');
+            divTabla.appendChild(table);
+
+            let conversion = document.getElementById('grados').value;
+            let valorInicial = parseInt(document.getElementById('inicio').value);
+            let valorFinal = parseInt(document.getElementById('final').value);
+            let intervalo = [];
+
+            if(!isNaN(valorInicial) || !isNaN(valorFinal)) {
+                let diferencia = (valorFinal - valorInicial)/9;
+                for (let i = 0; i < 10; i++) {
+                    intervalo[i] = parseFloat(valorInicial + diferencia*i).toFixed(2);
+                }
+
+                if(conversion == 'far') {
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = "<th>Celcius</th><th>Fahrenheit</th>"
+                    table.appendChild(tr);
+
+                    intervalo.forEach(valor => {
+                        let tr = document.createElement('tr');
+                        tr.innerHTML = `<td>${valor}</td><td>${(valor*9/5)+32}</td>`
+                        
+                        table.appendChild(tr);
+                    });
+                }
+
+            } else {
+                divTabla.innerHTML = "Escribe un valor válido";
+            }
+        }
+    </script>
+</body>
+</html>
