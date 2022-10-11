@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejercicios II</title>
     <style>
+        * {
+            box-sizing: border-box;
+
+            font-family: Arial;
+        }
+
         section {
             margin: 20px;
         }
@@ -15,6 +21,39 @@
             display: grid;
             grid-template-columns: 120px 100px;
             gap: 10px;
+        }
+
+        .tabla, .error {
+            width: 300px;
+            margin: 10px 0;
+        }
+
+        table, th, td {
+            text-align: center;
+        }
+
+        .tabla th {
+            width: 100px;
+        }
+
+        .tabla th, .tabla td {
+            padding: 2px 3px;
+        }
+
+        /* conversor divisas */
+        .input-divisas {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            margin: 10px 0;
+        }
+
+        .input-divisas > *{
+            margin: 2px 0;
+        }
+
+        .input-divisas select {
+            width: 100px;
         }
     </style>
 </head>
@@ -35,47 +74,173 @@
 
         </div>
 
-        <button class="btn" onclick="conversor()">Calcular</button>
+        <button class="btn" onclick="conversorGrados()">Calcular</button>
+        <button class="btn" onclick="conversorDocumentWrite()">Calcular doc</button>
 
         <div class="tabla"></div>
 
     </section>
 
+    <section>
+        <h2>Conversion de divisas</h2>
+
+        <div class="input-divisas">
+            <select name="divisasOrigen" id="divisasOrigen">
+                <option value="eur" selected>Euros</option>
+                <option value="dol">Dólares</option>
+                <option value="lib">Libras esterlinas</option>
+                <option value="yen">Yenes</option>
+            </select>
+            <input type="number" name="cantidadOrigen" id="cantidadOrigen">
+        </div>
+        
+        <div class="input-divisas">
+            <select name="divisasDestino" id="divisasDestino">
+                <option value="eur">Euros</option>
+                <option value="dol" selected>Dólares</option>
+                <option value="lib">Libras esterlinas</option>
+                <option value="yen">Yenes</option>
+            </select>
+            <input type="number" name="cantidadDestino" id="cantidadDestino">
+        </div>
+
+        <button class="btn" onclick="conversorDivisas()">Calcular</button>
+
+        <div class="error"></div>
+
+    </section>
+
     <script>
-        function conversor() {
-            const FAHRENHEIT = 32;
-
+        function conversorDocumentWrite() {
             const divTabla = document.querySelector('.tabla');
-            divTabla.innerHTML = "";
-            const table = document.createElement('table');
-            divTabla.appendChild(table);
-
+            
             let conversion = document.getElementById('grados').value;
             let valorInicial = parseInt(document.getElementById('inicio').value);
             let valorFinal = parseInt(document.getElementById('final').value);
             let intervalo = [];
 
-            if(!isNaN(valorInicial) || !isNaN(valorFinal)) {
+            if(!isNaN(valorInicial) && !isNaN(valorFinal) && valorInicial != valorFinal) {
                 let diferencia = (valorFinal - valorInicial)/9;
                 for (let i = 0; i < 10; i++) {
                     intervalo[i] = parseFloat(valorInicial + diferencia*i).toFixed(2);
                 }
 
                 if(conversion == 'far') {
+                    document.write('<table>');
+                    document.write("<tr><th>Celcius</th><th>Fahrenheit</th></tr>");
+                        
+                    intervalo.forEach(valor => {
+                        document.write(`<tr><td>${valor}</td><td>${((valor*9/5)+32).toFixed(2)}</td></tr>`);
+                    });
+
+                    document.write('</table>');
+                } else if (conversion == 'cel') {
+                    document.write('<table>');
+                    document.write("<tr><th>Celcius</th><th>Fahrenheit</th></tr>");
+                        
+                    intervalo.forEach(valor => {
+                        document.write(`<tr><td>${valor}</td><td>${((valor-32)*5/9).toFixed(2)}</td></tr>`);
+                    });
+                        
+                    document.write('</table>');
+                }
+            } else if(valorInicial == valorInicial) {
+                divTabla.innerHTML = "Escribe valores diferentes";
+            } else {
+                divTabla.innerHTML = "Escribe un valor válido";
+            }
+        }
+
+        function conversorGrados() {
+            const divTabla = document.querySelector('.tabla');
+            divTabla.innerHTML = "";
+            const table = document.createElement('table');
+
+            let conversion = document.getElementById('grados').value;
+            let valorInicial = parseInt(document.getElementById('inicio').value);
+            let valorFinal = parseInt(document.getElementById('final').value);
+            let intervalo = [];
+
+            if(!isNaN(valorInicial) && !isNaN(valorFinal) && valorInicial != valorFinal) {
+                let diferencia = (valorFinal - valorInicial)/9;
+                for (let i = 0; i < 10; i++) {
+                    intervalo[i] = parseFloat(valorInicial + diferencia*i).toFixed(2);
+                }
+
+                if(conversion == 'far') {
+                    divTabla.appendChild(table);
+
                     let tr = document.createElement('tr');
                     tr.innerHTML = "<th>Celcius</th><th>Fahrenheit</th>"
                     table.appendChild(tr);
 
                     intervalo.forEach(valor => {
                         let tr = document.createElement('tr');
-                        tr.innerHTML = `<td>${valor}</td><td>${(valor*9/5)+32}</td>`
+                        tr.innerHTML = `<td>${valor}</td><td>${((valor*9/5)+32).toFixed(2)}</td>`
+                        
+                        table.appendChild(tr);
+                    });
+                } else if (conversion == 'cel') {
+                    divTabla.appendChild(table);
+
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = "<th>Fahrenheit</th><th>Celcius</th>"
+                    table.appendChild(tr);
+
+                    intervalo.forEach(valor => {
+                        let tr = document.createElement('tr');
+                        tr.innerHTML = `<td>${valor}</td><td>${((valor-32)*5/9).toFixed(2)}</td>`
                         
                         table.appendChild(tr);
                     });
                 }
-
+            } else if(valorInicial == valorInicial) {
+                divTabla.innerHTML = "Escribe valores diferentes";
             } else {
                 divTabla.innerHTML = "Escribe un valor válido";
+            }
+        }
+
+        function conversorDivisas() {
+            const error = document.querySelector('.error');
+
+            let origen = document.getElementById('divisasOrigen').value;
+            let destino = document.getElementById('divisasDestino').value;
+            let cantidadOrigen = parseFloat(document.getElementById('cantidadOrigen').value);
+            let cantidadDestino = document.getElementById('cantidadDestino');
+
+            const conversion = {
+                "eur" : {
+                    "dol" : 0.97,
+                    "lib" : 0.88,
+                    "yen" : 141.43
+                },
+                "dol" : {
+                    "eur" : 1.03,
+                    "lib" : 0.9,
+                    "yen" : 145.67
+                },
+                "lib" : {
+                    "eur" : 1.14,
+                    "dol" : 1.11,
+                    "yen" : 161.23
+                },
+                "yen" : {
+                    "eur" : 0.0071,
+                    "dol" : 0.0069,
+                    "lib" : 0.0062
+                }
+            };
+
+            if(!isNaN(cantidadOrigen) && cantidadOrigen > 0 && origen != destino) {
+                cantidadDestino.value = cantidadOrigen * conversion[origen][destino];
+            } else if(origen == destino) {
+                error.innerHTML = "Seleccione divisas distintas";
+            } else if(cantidadOrigen <= 0) {
+                cantidadDestino.value = "";
+                error.innerHTML = "Introduzca una cantidad válida";
+            } else {
+                error.innerHTML = "Introduzca un valor válido";
             }
         }
     </script>
