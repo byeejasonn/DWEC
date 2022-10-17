@@ -8,26 +8,46 @@
 </head>
 <body>
     
-<script>
-    const f = function (x) {
-        return x*x*x;
-    }
-
-    function map(f, a) {
-        let resultado = [];
-
-        for (let i = 0; i < a.length; i++) {
-            resultado[i] = f(a[i]);
-            
+    <script>
+        const f = function (x) {
+            return x*x*x;
         }
 
-        return resultado;
-    }
+        function map(f, a) {
+            let resultado = [];
 
-    let numbers = [0,1,2,5,10];
-    let cube = map(f, numbers);
-    console.log(cube);
-</script>
+            for (let i = 0; i < a.length; i++) {
+                resultado[i] = f(a[i]);
+                
+            }
+
+            return resultado;
+        }
+
+        let numbers = [0,1,2,5,10];
+        let cube = map(f, numbers);
+        console.log(cube);
+
+        var num1 = 20, num2 = 3, name = 'Charly';
+
+        function multiply() {
+            return num1 * num2;
+        }
+
+        console.log(multiply());
+
+        function getScore() {
+            var num1 = 2, num2 = 3;
+
+            function add() {
+                return name + " anotó " + (num1+num2);
+            }
+
+            return add();
+        }
+
+        console.log(getScore());
+    </script>
 
 </body>
 </html>
