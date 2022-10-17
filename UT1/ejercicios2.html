@@ -233,7 +233,7 @@
             };
 
             if(!isNaN(cantidadOrigen) && cantidadOrigen > 0 && origen != destino) {
-                cantidadDestino.value = cantidadOrigen * conversion[origen][destino];
+                cantidadDestino.value = (cantidadOrigen * conversion[origen][destino]).toFixed(2);
             } else if(origen == destino) {
                 error.innerHTML = "Seleccione divisas distintas";
             } else if(cantidadOrigen <= 0) {
