@@ -19,32 +19,53 @@
         th, td {
             text-align: center;
         }
+
+        .inputs {
+            display: grid;
+            grid-template-columns: 150px 200px;
+            margin: 10px 0;
+            gap: 10px;
+        }
+
+        .solucion {
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
     <section>
         <h2>Ejercicio1</h2>
 
-        <div class="input">
+        <div class="inputs">
             <label for="base">Base: </label><input type="number" name="base" id="base">
             <label for="altura">Altura: </label><input type="number" name="altura" id="altura">
         </div>
         <button id="btn1" onclick="ejercicio1()">Calcular Perímetro</button>
 
         <div class="solucion solucion1"></div>
-
     </section>
 
     <section>
         <h2>Ejercicio2</h2>
 
-        <div class="input">
+        <div class="inputs">
             <label for="numAlumnos">Número alumnos: </label> <input type="number" name="numAlumnos" id="numAlumnos">
         </div>
-        <button id="btn1" onclick="ejercicio2()">Calcular Perímetro</button>
+        <button id="btn1" onclick="ejercicio2()">Alumnos</button>
 
         <div class="solucion solucion2"></div>
+    </section>
 
+    <section>
+        <h2>Ejercicio3</h2>
+
+        <div class="inputs">
+            <label for="primeraPalabra">Primera palabra: </label> <input type="text" name="primeraPalabra" id="primeraPalabra">
+            <label for="segundaPalabra">Segunda palabra: </label> <input type="text" name="segundaPalabra" id="segundaPalabra">
+        </div>
+        <button id="btn1" onclick="ejercicio3()">Comprobar</button>
+
+        <div class="solucion solucion3"></div>
     </section>
 
     <script>
@@ -79,10 +100,18 @@
 
         function ejercicio2() {
             const solucion = document.querySelector('.solucion2');
+            // creamos la tabla donde se mostrarian los datos para hacer la comprobacion
+            const table = document.createElement('table');
+            // comprobamos si el contenedor ya contiene la tabla de las notas
+            if (solucion.contains(table)) table.remove();
+
+            // después de borrar la tabla la volvemos a añadir para que no se duplique
+            
+
             const numAlumnos = parseInt(document.getElementById('numAlumnos').value);
             let alumnos = [];
-            // && numAlumnos <= 20 && numAlumnos >= 8
-            if (!isNaN(numAlumnos)) {
+
+            if (!isNaN(numAlumnos) && numAlumnos <= 20 && numAlumnos >= 8) {
                 let nombre, nota, notamedia = 0;
 
                 for (let i=0; i < numAlumnos; i++) {
@@ -99,20 +128,37 @@
                     } while (isNaN(nota));
                 }
 
+                // añadimos al final del array alumnos la nota media
                 notamedia /= numAlumnos;
-                alumnos.push({nombre: 'Nota media: ', nota: notamedia});
+                alumnos.push({nombre: 'Nota media: ', nota: notamedia.toFixed(2)});
 
-                const table = document.createElement('table');
-                
+                // añadimos la tabla creada y añadimos las cabeceras
+                solucion.append(table);
+                let tr = table.insertRow();
+                tr.innerHTML = '<th>Nombre</th> <th>Nota</th>';
 
                 alumnos.forEach(alumno => {
-                    solucion.innerHTML += `
-                        <tr><td>${alumno.nombre}</td> <td>${alumno.nota}</td></tr>
-                    `;
+                    let tr = table.insertRow();
+                    tr.innerHTML = `<td>${alumno.nombre}</td> <td>${alumno.nota}</td>`;
                 });
 
             } else {
                 solucion.innerHTML = 'Escriba un valor mayor o igual que 8, o menor o igual que 20';
+            }
+        }
+
+        function ejercicio3() {
+            const solucion = document.querySelector('.solucion3');
+            let cadena1 = document.getElementById('primeraPalabra').value;
+            let cadena2 = document.getElementById('segundaPalabra').value;
+
+            cadenas = [cadena1, cadena2];
+
+
+            if ((cadenas[0].toLowerCase()).includes(cadenas[1].toLowerCase())) {
+                solucion.innerHTML = `<i>${cadenas[0]}</i> contiene todas las letras de <i>${cadenas[1]}</i>`;
+            } else {
+                solucion.innerHTML = `<i>${cadenas[0]}</i> no contiene todas las letras de <i>${cadenas[1]}</i>`;
             }
         }
 

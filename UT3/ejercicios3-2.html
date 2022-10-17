@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios tema3</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        .solucion {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h2>Días restantes hasta fin de año</h2>
+
+        <div class="solucion"></div>
+    </section>
+
+    <script>
+        const solucion = document.querySelector('.solucion');
+        let date = new Date();
+        let nextYear = new Date(`1/1/${date.getFullYear() + 1}`);
+
+        let days = Math.ceil((nextYear.getTime() - date.getTime()) / 86400000);
+
+        solucion.innerHTML = `Quedan ${days} días para el siguiente año`;
+    </script>
+</body>
+</html>
