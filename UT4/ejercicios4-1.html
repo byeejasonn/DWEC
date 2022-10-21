@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios tema4</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 4px;
+        }
+
+        th, td {
+            text-align: center;
+        }
+
+        .inputs {
+            display: grid;
+            grid-template-columns: 150px 200px;
+            margin: 10px 0;
+            gap: 10px;
+        }
+
+        .solucion {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h2>Ejercicio1</h2>
+
+        <div class="inputs">
+            <label for="base">Base: </label><input type="number" name="base" id="base">
+            <label for="altura">Altura: </label><input type="number" name="altura" id="altura">
+        </div>
+        <button id="btn1" onclick="ejercicio1()">Calcular Perímetro</button>
+
+        <div class="solucion solucion1"></div>
+    </section>
+
+    <section>
+        <h2>Ejercicio2</h2>
+
+        <div class="inputs">
+            <label for="numAlumnos">Número alumnos: </label> <input type="number" name="numAlumnos" id="numAlumnos">
+        </div>
+        <button id="btn1" onclick="ejercicio2()">Alumnos</button>
+
+        <div class="solucion solucion2"></div>
+    </section>
+
+    <section>
+        <h2>Ejercicio3</h2>
+
+        <div class="inputs">
+            <label for="primeraPalabra">Primera palabra: </label> <input type="text" name="primeraPalabra" id="primeraPalabra">
+            <label for="segundaPalabra">Segunda palabra: </label> <input type="text" name="segundaPalabra" id="segundaPalabra">
+        </div>
+        <button id="btn1" onclick="ejercicio3()">Comprobar</button>
+
+        <div class="solucion solucion3"></div>
+    </section>
+
+    <script>
+
+        function perimetroRectangulo(b, a) {
+            return (b*2) + (a*2);
+        }
+        
+        function ejercicio1() {
+            const solucion = document.querySelector('.solucion1');
+            let base = parseFloat(document.getElementById('base').value);
+            let altura = parseFloat(document.getElementById('altura').value);
+            let perimetro;
+
+            if (!isNaN(base) && !isNaN(altura)) {
+                perimetro = perimetroRectangulo(base, altura);
+
+                solucion.innerHTML = `
+                    <table>
+                        <tr>
+                            <th>Entrada</th> <th>Salida</th>
+                        </tr>
+                        <tr>
+                            <td>${base}, ${altura}</td> <td>${perimetro}</td>
+                        </tr>
+                    </table>
+                `;
+            } else {
+                solucion.innerHTML = 'Escribe valores numéricos';
+            }
+        }
+
+        function ejercicio2() {
+            const solucion = document.querySelector('.solucion2');
+            // creamos la tabla donde se mostrarian los datos para hacer la comprobacion
+            const table = document.createElement('table');
+            // comprobamos si el contenedor ya contiene la tabla de las notas
+            if (solucion.contains(table)) table.remove();
+
+            // después de borrar la tabla la volvemos a añadir para que no se duplique
+            
+
+            const numAlumnos = parseInt(document.getElementById('numAlumnos').value);
+            let alumnos = [];
+
+            if (!isNaN(numAlumnos) && numAlumnos <= 20 && numAlumnos >= 8) {
+                let nombre, nota, notamedia = 0;
+
+                for (let i=0; i < numAlumnos; i++) {
+                    do {
+                        nombre = prompt(`Escriba el nombre del alumno ${i+1}:`);
+                        nota = parseFloat(prompt(`Escriba la nota del alumno ${i+1}:`));
+                        if (!isNaN(nota)) {
+                            alumnos[i] = {
+                                nombre: nombre,
+                                nota: nota
+                            }
+                            notamedia += nota;
+                        }
+                    } while (isNaN(nota));
+                }
+
+                // añadimos al final del array alumnos la nota media
+                notamedia /= numAlumnos;
+                alumnos.push({nombre: 'Nota media: ', nota: notamedia.toFixed(2)});
+
+                // añadimos la tabla creada y añadimos las cabeceras
+                solucion.append(table);
+                let tr = table.insertRow();
+                tr.innerHTML = '<th>Nombre</th> <th>Nota</th>';
+
+                alumnos.forEach(alumno => {
+                    let tr = table.insertRow();
+                    tr.innerHTML = `<td>${alumno.nombre}</td> <td>${alumno.nota}</td>`;
+                });
+
+            } else {
+                solucion.innerHTML = 'Escriba un valor mayor o igual que 8, o menor o igual que 20';
+            }
+        }
+
+        function ejercicio3() {
+            const solucion = document.querySelector('.solucion3');
+            let cadena1 = document.getElementById('primeraPalabra').value;
+            let cadena2 = document.getElementById('segundaPalabra').value;
+
+            cadenas = [cadena1, cadena2];
+
+
+            if ((cadenas[0].toLowerCase()).includes(cadenas[1].toLowerCase())) {
+                solucion.innerHTML = `<i>${cadenas[0]}</i> contiene todas las letras de <i>${cadenas[1]}</i>`;
+            } else {
+                solucion.innerHTML = `<i>${cadenas[0]}</i> no contiene todas las letras de <i>${cadenas[1]}</i>`;
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -7,161 +7,67 @@
     <title>Ejercicios tema3</title>
     <style>
         * {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding: 4px;
-        }
-
-        th, td {
-            text-align: center;
+            font-family: Arial;
         }
 
         .inputs {
             display: grid;
-            grid-template-columns: 150px 200px;
-            margin: 10px 0;
-            gap: 10px;
+            gap: 20px;
+            grid-template-columns: max-content min-content;
         }
 
         .solucion {
-            margin: 10px 0;
+            margin: 20px 0;
+        }
+
+        button {
+            width: 60px;
         }
     </style>
+
 </head>
 <body>
     <section>
-        <h2>Ejercicio1</h2>
-
+        <h2>Formatos de hora</h2>
         <div class="inputs">
-            <label for="base">Base: </label><input type="number" name="base" id="base">
-            <label for="altura">Altura: </label><input type="number" name="altura" id="altura">
+            <label for="format24">Formato 24h (detallada): </label><input type="radio" name="horas" id="format24" value="format24">
+            <label for="format12">Formato 12h: </label><input type="radio" name="horas" id="format12" value="format12">
+            <button onclick="ejercicio1()">Enviar</button>
         </div>
-        <button id="btn1" onclick="ejercicio1()">Calcular Perímetro</button>
-
         <div class="solucion solucion1"></div>
     </section>
 
     <section>
-        <h2>Ejercicio2</h2>
-
+        <h2>Pelicula favorita</h2>
         <div class="inputs">
-            <label for="numAlumnos">Número alumnos: </label> <input type="number" name="numAlumnos" id="numAlumnos">
+            <label for="titulo">Titulo: </label><input type="text" name="titulo" id="titulo">
+            <label for="autor">Autor: </label><input type="text" name="autor" id="autor">
+            <label for="anio">Año: </label><input type="number" name="anio" id="anio">
+            <button onclick="ejercicio2()">Enviar</button>
         </div>
-        <button id="btn1" onclick="ejercicio2()">Alumnos</button>
-
         <div class="solucion solucion2"></div>
     </section>
 
-    <section>
-        <h2>Ejercicio3</h2>
-
-        <div class="inputs">
-            <label for="primeraPalabra">Primera palabra: </label> <input type="text" name="primeraPalabra" id="primeraPalabra">
-            <label for="segundaPalabra">Segunda palabra: </label> <input type="text" name="segundaPalabra" id="segundaPalabra">
-        </div>
-        <button id="btn1" onclick="ejercicio3()">Comprobar</button>
-
-        <div class="solucion solucion3"></div>
-    </section>
 
     <script>
-
-        function perimetroRectangulo(b, a) {
-            return (b*2) + (a*2);
-        }
-        
         function ejercicio1() {
             const solucion = document.querySelector('.solucion1');
-            let base = parseFloat(document.getElementById('base').value);
-            let altura = parseFloat(document.getElementById('altura').value);
-            let perimetro;
+            const radio1 = document.getElementById('format24').checked;
+            const radio2 = document.getElementById('format12').checked;
 
-            if (!isNaN(base) && !isNaN(altura)) {
-                perimetro = perimetroRectangulo(base, altura);
+            let date = new Date();
 
-                solucion.innerHTML = `
-                    <table>
-                        <tr>
-                            <th>Entrada</th> <th>Salida</th>
-                        </tr>
-                        <tr>
-                            <td>${base}, ${altura}</td> <td>${perimetro}</td>
-                        </tr>
-                    </table>
-                `;
-            } else {
-                solucion.innerHTML = 'Escribe valores numéricos';
+            if (radio1) {
+                solucion.innerHTML = ('0'+date.getHours()).slice(-2) + ':' + ('0'+date.getMinutes()).slice(-2) + ':' + ('0'+date.getSeconds()).slice(-2);
+            } else if (radio2) {
+                let timezone = (date.getHours() > 12)?' PM':' AM';
+                solucion.innerHTML = ('0'+(date.getHours()-12)).slice(-2) + ':' + ('0'+date.getUTCMinutes()).slice(-2) + timezone;
             }
         }
 
         function ejercicio2() {
             const solucion = document.querySelector('.solucion2');
-            // creamos la tabla donde se mostrarian los datos para hacer la comprobacion
-            const table = document.createElement('table');
-            // comprobamos si el contenedor ya contiene la tabla de las notas
-            if (solucion.contains(table)) table.remove();
-
-            // después de borrar la tabla la volvemos a añadir para que no se duplique
-            
-
-            const numAlumnos = parseInt(document.getElementById('numAlumnos').value);
-            let alumnos = [];
-
-            if (!isNaN(numAlumnos) && numAlumnos <= 20 && numAlumnos >= 8) {
-                let nombre, nota, notamedia = 0;
-
-                for (let i=0; i < numAlumnos; i++) {
-                    do {
-                        nombre = prompt(`Escriba el nombre del alumno ${i+1}:`);
-                        nota = parseFloat(prompt(`Escriba la nota del alumno ${i+1}:`));
-                        if (!isNaN(nota)) {
-                            alumnos[i] = {
-                                nombre: nombre,
-                                nota: nota
-                            }
-                            notamedia += nota;
-                        }
-                    } while (isNaN(nota));
-                }
-
-                // añadimos al final del array alumnos la nota media
-                notamedia /= numAlumnos;
-                alumnos.push({nombre: 'Nota media: ', nota: notamedia.toFixed(2)});
-
-                // añadimos la tabla creada y añadimos las cabeceras
-                solucion.append(table);
-                let tr = table.insertRow();
-                tr.innerHTML = '<th>Nombre</th> <th>Nota</th>';
-
-                alumnos.forEach(alumno => {
-                    let tr = table.insertRow();
-                    tr.innerHTML = `<td>${alumno.nombre}</td> <td>${alumno.nota}</td>`;
-                });
-
-            } else {
-                solucion.innerHTML = 'Escriba un valor mayor o igual que 8, o menor o igual que 20';
-            }
         }
-
-        function ejercicio3() {
-            const solucion = document.querySelector('.solucion3');
-            let cadena1 = document.getElementById('primeraPalabra').value;
-            let cadena2 = document.getElementById('segundaPalabra').value;
-
-            cadenas = [cadena1, cadena2];
-
-
-            if ((cadenas[0].toLowerCase()).includes(cadenas[1].toLowerCase())) {
-                solucion.innerHTML = `<i>${cadenas[0]}</i> contiene todas las letras de <i>${cadenas[1]}</i>`;
-            } else {
-                solucion.innerHTML = `<i>${cadenas[0]}</i> no contiene todas las letras de <i>${cadenas[1]}</i>`;
-            }
-        }
-
     </script>
 </body>
 </html>
