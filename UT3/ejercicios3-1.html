@@ -67,6 +67,29 @@
 
         function ejercicio2() {
             const solucion = document.querySelector('.solucion2');
+            const titulo = document.getElementById('titulo').value;
+            const autor = document.getElementById('autor').value;
+            const anio = parseInt(document.getElementById('anio').value);
+
+
+            if (titulo !== '' && autor !== '' && !isNaN(anio)) {
+                solucion.innerHTML = `
+                    Longitud titulo: ${titulo.replace(' ','').length}<br>
+                    Longitud autor: ${autor.replace(' ','').length}<br>
+                    <br>
+                    Titulo mayúsculas: ${titulo.toUpperCase()}<br>
+                    Titulo minúsculas: ${titulo.toLowerCase()}<br>
+                    <br>
+    
+                    <ul>
+                        <li>Titulo: ${titulo}</li>
+                        <li>Autor: ${autor}</li>
+                        <li>Año: ${anio}</li>
+                    </ul>
+                `
+            } else {
+                solucion.innerHTML = 'Rellene todos los campos';
+            }
         }
     </script>
 </body>
