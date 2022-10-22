@@ -1,19 +1,24 @@
 var todosLados=null;
 
 function abrirVentana(){
-	
-	let vs = window.open("secundaria.html");	
-	
-	
 
+	const url = document.getElementById('idUrl').value;
+	
+	const vs = window.open("secundaria.html","Ventana secundaria");	
+
+	
 	vs.onload=function(){
-
-		vs.document.getElementById("texto").innerHTML="no nos gusta";
+		console.log("ventana abierta");
+		vs.getUrl(url);
 	}
+	
+	// vs.addEventListener("DOMContentLoaded", () => {
+	// 	console.log("ventana abierta");
+	// 	vs.getUrl(url);
+	// })
 	
 	todosLados="no nos gusta tampoco";
 	
 	// Cerrar Venta pasados un 3 segundos
 	//setTimeout(cerrarVentana,3000)
-	
 }
