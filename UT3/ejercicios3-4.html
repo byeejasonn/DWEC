@@ -67,19 +67,12 @@
         btnAbrir1.onclick = () => {
             let size = (confirm('¿Tamaño pequeño?'))?'fullscreen=no,width=300,height=200,left=500px,top=500px':'';
             newWindow = window.open(url,'_blank', size);
-
-            newWindow.scrollTo(0, newWindow.innerHeight);
-
-            // setTimeout( () => {
-            //     w3.close();
-            // }, 10000);
         }
 
         btnAbrir2.onclick = () => {
             let numero = Math.round(3 * Math.random());
             
             newWindow = window.open(urls[numero],'_blank');
-
         }
 
         btnAbrir3.onclick = () => {
