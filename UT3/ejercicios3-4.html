@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios tema3</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        section {
+            background-color: #a5a5a5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 200px;
+        }
+
+        section h2 {
+            color: white;
+        }
+
+        section h3 {
+            color: purple;
+        }
+
+        .inputs {
+            display: flex;
+            gap: 20px;
+        }
+
+        .inputs button {
+            height: 25px;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h2>DWEC 22/23</h2>
+        <h3>Cerrar/Abrir Ventana usando JavaScript</h3>
+
+        <div class="inputs">
+            <button id="abrir1">Abrir ventana</button>
+            <button id="abrir2">Abrir ventana Random</button>
+            <button id="abrir3">Abrir ventana half size</button>
+        </div>
+    </section>
+
+    <script>
+        const btnAbrir1 = document.getElementById('abrir1');
+        const btnAbrir2 = document.getElementById('abrir2');
+        const btnAbrir3 = document.getElementById('abrir3');
+        let url = 'https://www.w3schools.com/js/';
+        let urls = {
+            0: 'https://www.google.com/intl/es/gmail/about/',
+            1: 'https://correoweb.educa.madrid.org/',
+            2: 'https://login.yahoo.com/',
+            3: 'https://outlook.live.com/owa/'
+        }
+
+        let newWindow;
+
+        // COMENTARIO IMPORTANTE SI ESTA EN PANTALLA COMPLETA EL NAVEGADOR NO TERMINA DE FUNCIONAR, TIENE QUE ESTAR EN MODO VENTANA PARA QUE SE ABRAN LAS OTRAS VENTANAS BIEN
+
+        btnAbrir1.onclick = () => {
+            let size = (confirm('¿Tamaño pequeño?'))?'fullscreen=no,width=300,height=200,left=500px,top=500px':'';
+            newWindow = window.open(url,'_blank', size);
+
+            newWindow.scrollTo(0, newWindow.innerHeight);
+
+            // setTimeout( () => {
+            //     w3.close();
+            // }, 10000);
+        }
+
+        btnAbrir2.onclick = () => {
+            let numero = Math.round(3 * Math.random());
+            
+            newWindow = window.open(urls[numero],'_blank');
+
+        }
+
+        btnAbrir3.onclick = () => {
+            let numero = Math.round(3 * Math.random());
+            
+            newWindow = window.open(urls[numero],'_blank', 'fullscreen=no,menubar=yes,toolbar=yes,resizable=no');
+
+            newWindow.resizeTo(newWindow.innerWidth/2, newWindow.innerHeight/2);
+        }
+    </script>
+</body>
+</html>

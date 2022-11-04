@@ -55,6 +55,9 @@
 
         btnAbrir.onclick = () => {
             w3 = window.open(url,'_blank', 'width=800,height=800');
+            setTimeout( () => {
+                w3.close();
+            }, 10000);
         }
 
         btnCerrar.onclick = () => {
