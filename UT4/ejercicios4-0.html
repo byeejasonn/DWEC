@@ -62,20 +62,19 @@
         let nombre = '';
         let empleados = {};
         const minTrabajadores = 1;
-        let patter = new RegExp('[a-zA-ZñÑ0]*');
+        let pattern = new RegExp('^[0]|^[a-zA-ZñÑ]{1,}');
 
         delegaciones.forEach(delegacion => {
             let trabajadores = []
             do {
-                nombre = prompt(`EMPRESA: ${delegacion}\nIntroduce el nombre del empleado:\nPara salir escriba '0' en el nombre`);
-                // console.log(nombre + ' '+ patter.test(nombre));
-                if (nombre !== '0' && nombre != null && nombre !== '' && patter.test(nombre)) {
+                nombre = prompt(`DELEGACIÓN: ${delegacion}\nIntroduce el nombre del empleado:\nPara salir escriba '0' en el nombre`);
+                if (nombre !== '0' && nombre != null && nombre !== '' && pattern.test(nombre)) {
                     let salario = parseFloat(prompt(`Introduce el salario de ${nombre}:`));
                     
                     if (salario > 0) {
                         trabajadores.push({
                             'Nombre': capitalizeFirstLetter(nombre),
-                            'Salario': salario.toFixed(2)
+                            'Salario': salario
                         })
                     }
                 }
