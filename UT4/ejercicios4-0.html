@@ -68,7 +68,7 @@
             let trabajadores = []
             do {
                 nombre = prompt(`EMPRESA: ${delegacion}\nIntroduce el nombre del empleado:\nPara salir escriba '0' en el nombre`);
-                console.log(nombre + ' '+ patter.test(nombre));
+                // console.log(nombre + ' '+ patter.test(nombre));
                 if (nombre !== '0' && nombre != null && nombre !== '' && patter.test(nombre)) {
                     let salario = parseFloat(prompt(`Introduce el salario de ${nombre}:`));
                     
@@ -84,7 +84,7 @@
             } while (nombre !== '0' || trabajadores.length < minTrabajadores);
         });
 
-        console.log(JSON.stringify(empleados));
+        // console.log(JSON.stringify(empleados));
         empleados['Sevilla'].forEach((empleado) => {
             console.log(empleado.Salario);
         });
@@ -121,9 +121,9 @@
 
             spanSueldos = document.createElement('span');
             console.log(empleados[delegacion].Salario);
-            span.innerHTML = `
-                Menor sueldo: ${empleados[delegacion].Nombre} ${(Math.min(... salarios))}€ <br>
-                Mayor sueldo: ${empleados[delegacion].Nombre} ${(Math.max(... salarios))}€
+            spanSueldos.innerHTML = `
+                Menor sueldo: ${(Math.min(... salarios))}€ <br>
+                Mayor sueldo: ${(Math.max(... salarios))}€
             `
 
             divDelegacion.appendChild(table);
