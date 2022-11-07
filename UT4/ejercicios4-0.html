@@ -10,6 +10,10 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
+        table {
+            margin: 10px 0 20px;
+        }
+
         table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
@@ -19,10 +23,14 @@
             padding: 2px 4px;
         }
 
-        .delegacion {
+        .delegacion__title {
             font-weight: bold;
             font-size: 22px;
             margin: 10px 10px 10px  0;
+        }
+
+        .delegacion {
+            margin: 15px 0;
         }
     </style>
 </head>
@@ -44,47 +52,83 @@
     </div>
 
     <script>
+        function capitalizeFirstLetter(str) {
+            return str[0].toUpperCase() + str.slice(1);
+        }
+
         const divDelegaciones = document.querySelector('.delegaciones');
 
         let delegaciones = ['Sevilla', 'Huelva', 'Cadiz'];
         let nombre = '';
-        let salarios = {};
+        let empleados = {};
         const minTrabajadores = 1;
+        let patter = new RegExp('[a-zA-ZñÑ0]*');
 
         delegaciones.forEach(delegacion => {
             let trabajadores = []
             do {
                 nombre = prompt(`EMPRESA: ${delegacion}\nIntroduce el nombre del empleado:\nPara salir escriba '0' en el nombre`);
-                
-                if (nombre !== '0' && nombre != null && nombre !== '') {
+                console.log(nombre + ' '+ patter.test(nombre));
+                if (nombre !== '0' && nombre != null && nombre !== '' && patter.test(nombre)) {
                     let salario = parseFloat(prompt(`Introduce el salario de ${nombre}:`));
                     
                     if (salario > 0) {
                         trabajadores.push({
-                            'Nombre': nombre,
-                            'Salario': salario
+                            'Nombre': capitalizeFirstLetter(nombre),
+                            'Salario': salario.toFixed(2)
                         })
                     }
                 }
 
-                salarios[delegacion] = trabajadores;
+                empleados[delegacion] = trabajadores;
             } while (nombre !== '0' || trabajadores.length < minTrabajadores);
         });
 
-        console.log(JSON.stringify(salarios));
+        console.log(JSON.stringify(empleados));
+        empleados['Sevilla'].forEach((empleado) => {
+            console.log(empleado.Salario);
+        });
 
         delegaciones.forEach(delegacion => {
-            divDelegaciones.innerHTML += `<span class='delegacion'>Delegación de ${delegacion}</span> <span>${salarios[delegacion].length} trabajadore(s)</span>`;
+            let salarioMedio = 0;
+            let salarios = [];
+            let divDelegacion = document.createElement('div');
+            divDelegacion.classList.add('delegacion');
+            divDelegacion.innerHTML = `<span class='delegacion__title'>Delegación de ${delegacion}</span><span>${empleados[delegacion].length} trabajadore(s)</span>`;
+            
             
             let table = document.createElement('table');
             let tr = table.insertRow();
             tr.innerHTML = '<th>Nombre</th><th>Salario</th>';
+
+
+            if (delegacion == 'Huelva') {
+                empleados[delegacion].sort((a, b) => a.Salario - b.Salario);
+            } else {
+                empleados[delegacion].sort((a, b) => b.Salario - a.Salario);
+            }
             
-            salarios[delegacion].forEach(empleado => {
+            
+            empleados[delegacion].forEach(empleado => {
                 tr = table.insertRow();
-                tr.innerHTML = `<td>${empleado['Nombre']}</td><td>${empleado['Salario']}</td>`;
+                tr.innerHTML = `<td>${empleado.Nombre}</td><td>${empleado.Salario}€</td>`;
+                salarioMedio += empleado.Salario;
+                salarios.push(empleado.Salario)
             })
-            divDelegaciones.appendChild(table);
+
+            tr = table.insertRow();
+            tr.innerHTML = `<td>Media:</td><td>${(salarioMedio/empleados[delegacion].length)}€</td>`
+
+            spanSueldos = document.createElement('span');
+            console.log(empleados[delegacion].Salario);
+            span.innerHTML = `
+                Menor sueldo: ${empleados[delegacion].Nombre} ${(Math.min(... salarios))}€ <br>
+                Mayor sueldo: ${empleados[delegacion].Nombre} ${(Math.max(... salarios))}€
+            `
+
+            divDelegacion.appendChild(table);
+            divDelegaciones.appendChild(divDelegacion);
+            divDelegaciones.appendChild(spanSueldos);
         });
     </script>
 </body>
