@@ -67,6 +67,9 @@
         btnAbrir1.onclick = () => {
             let size = (confirm('¿Tamaño pequeño?'))?'fullscreen=no,width=300,height=200,left=500px,top=500px':'';
             newWindow = window.open(url,'_blank', size);
+
+            // no va probablemente porque la pagina ya tiene js y no me deja mandar una orden como esta
+            newWindow.scrollTo(0, newWindow.document.body.scrollHeight);
         }
 
         btnAbrir2.onclick = () => {
@@ -80,7 +83,9 @@
             
             newWindow = window.open(urls[numero],'_blank', 'fullscreen=no,menubar=yes,toolbar=yes,resizable=no');
 
-            newWindow.resizeTo(newWindow.innerWidth/2, newWindow.innerHeight/2);
+            newWindow.resizeTo(screen.width, screen.height/2);
+
+            alert((newWindow.navigator.cookieEnabled)?'La página tiene las cookies activas':'La página no tienen las cookies activas');
         }
     </script>
 </body>
