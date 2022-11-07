@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios tema4</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 2px 4px;
+        }
+
+        .delegacion {
+            font-weight: bold;
+            font-size: 22px;
+            margin: 10px 10px 10px  0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1.- La empresa Dolty S.A., tiene tres delegaciones en tres provincias andaluzas
+    (Sevilla, Huelva, Cadiz). Cada una de ellas tiene un numero variado de
+    empleados, que no es inferior a 4 en ninguna de ellas. Realiza un programa que
+    cargue el sueldo de los empleados, junto a su nombre, de cada una de las delegaciones en una array
+    distinto. Para finalizar la carga de cada array se ingresa como dato el cero.
+    Una vez ingresados los sueldos, mostrar los siguientes datos:
+    a) Informar del tamaño (numero de empleados) de cada una de las delegaciones.
+    b) Determinar la media de los sueldos de cada una de las delegaciones.
+    c) Ordenar de menor a mayor los sueldos de Huelva, De mayor a menor los de Sevilla y
+         Cádiz. Indicando a que delegación pertenece cada lista ordenada
+    d) Determinar  el sueldo menor y el mayor de las tres delegaciones. -->
+
+    <div class="delegaciones">
+
+    </div>
+
+    <script>
+        const divDelegaciones = document.querySelector('.delegaciones');
+
+        let delegaciones = ['Sevilla', 'Huelva', 'Cadiz'];
+        let nombre = '';
+        let salarios = {};
+        const minTrabajadores = 1;
+
+        delegaciones.forEach(delegacion => {
+            let trabajadores = []
+            do {
+                nombre = prompt(`EMPRESA: ${delegacion}\nIntroduce el nombre del empleado:\nPara salir escriba '0' en el nombre`);
+                
+                if (nombre !== '0' && nombre != null && nombre !== '') {
+                    let salario = parseFloat(prompt(`Introduce el salario de ${nombre}:`));
+                    
+                    if (salario > 0) {
+                        trabajadores.push({
+                            'Nombre': nombre,
+                            'Salario': salario
+                        })
+                    }
+                }
+
+                salarios[delegacion] = trabajadores;
+            } while (nombre !== '0' || trabajadores.length < minTrabajadores);
+        });
+
+        console.log(JSON.stringify(salarios));
+
+        delegaciones.forEach(delegacion => {
+            divDelegaciones.innerHTML += `<span class='delegacion'>Delegación de ${delegacion}</span> <span>${salarios[delegacion].length} trabajadore(s)</span>`;
+            
+            let table = document.createElement('table');
+            let tr = table.insertRow();
+            tr.innerHTML = '<th>Nombre</th><th>Salario</th>';
+            
+            salarios[delegacion].forEach(empleado => {
+                tr = table.insertRow();
+                tr.innerHTML = `<td>${empleado['Nombre']}</td><td>${empleado['Salario']}</td>`;
+            })
+            divDelegaciones.appendChild(table);
+        });
+    </script>
+</body>
+</html>
