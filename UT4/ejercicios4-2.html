@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios Tema4</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="mascota">
+
+    </div>
+
+    <script>
+        const divMascota = document.querySelector('.mascota');
+
+        class Mascota {
+            constructor(nombre, cantidad) {
+                this.nombre = nombre;
+                this.cantidad = cantidad;
+            }
+
+            specs() {
+                return `Nombre: ${this.nombre}, cantidad de comida diaria ${this.cantidad} gramos`;
+            }
+        }
+
+        class MascotaComida extends Mascota {
+            mascotaDias() {
+                return `A ${this.nombre} le durará la comida ${3000 / this.cantidad} día(s)`;
+            }
+        }
+
+        let mascotas = [
+        new MascotaComida('Mario', 1000),
+        new MascotaComida('Danieh', 200),
+        new MascotaComida('Aki', 500),
+        ];
+
+        let ul = document.createElement('ul');
+        mascotas.forEach((mascota) => {
+            let li = document.createElement('li');
+            li.innerHTML = `${mascota.specs()} || ${mascota.mascotaDias()}`;
+            ul.appendChild(li);
+        });
+
+        divMascota.appendChild(ul);
+        
+    </script>
+</body>
+</html>
