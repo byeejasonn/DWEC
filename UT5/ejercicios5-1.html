@@ -11,79 +11,28 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        .wrapper {
-            margin: 60px 0;
-        }
-
-        .event1 {
+        .event {
             background: green;
             width: 200px;
             height: 100px;
             cursor: pointer;
-        }
-
-        .event2-wrapper {
-            width: fit-content;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 40px 50px;
-        }
-
-        .card {
-            height: 200px;
-            width: 140px;
-            background: red;
-            cursor: pointer;
-            color: white;
-            font-size: 24px;
-            text-align: center;
-            line-height: 200px;
-        }
-
-        .selected {
-            background: blue;
+            margin: 30px auto;
         }
     </style>
 </head>
 <body>
-    <div class="wrapper event1-wrapper">
-        <div class="event1"></div>
-    </div>
-
-    <div class="wrapper event2-wrapper">
-
-    </div>
+        <div class="event"></div>
 
     <script>
-        const event1 = document.querySelector('.event1');
-        const event2Div = document.querySelector('.event2-wrapper');
-        let jugadores = [];
-        let opciones = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
-        opciones.sort(() => (Math.random() > .5) ? 1 : -1);
+        const event = document.querySelector('.event');
 
-        event1.addEventListener('mousedown', () => {
-            event1.style.background = 'orange';
+        event.addEventListener('mousedown', () => {
+            event.style.background = 'orange';
         });
         
         addEventListener('mouseup', () => {
-            event1.style.background = 'green';
+            event.style.background = 'green';
         });
-        
-        for (let i = 0; i < opciones.length; i++) {
-            card = document.createElement('div');
-            card.classList.add('card');
-            card.innerHTML = opciones[i];
-            event2Div.appendChild(card);
-        }
-        
-        const cards = document.querySelectorAll('.card');
-        for (const card of cards) {
-            card.addEventListener('click', () => {
-                card.classList.toggle('selected');
-            });
-        }
-
     </script>
 </body>
 </html>

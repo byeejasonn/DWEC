@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de cartas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .event-wrapper {
+            width: fit-content;
+            margin: 60px auto;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 40px 50px;
+        }
+
+        .card {
+            height: 200px;
+            width: 140px;
+            background: red;
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            line-height: 200px;
+            user-select: none;
+        }
+
+        .selected {
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper event-wrapper"></div>
+
+    <script>
+        const eventDiv = document.querySelector('.event-wrapper');
+        let jugadores = [];
+        let opciones = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
+        let cartasSelected = [];
+        let contador = 0;
+        opciones.sort(() => (Math.random() > .5) ? 1 : -1);
+        
+        for (let i = 0; i < opciones.length; i++) {
+            card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = opciones[i];
+            eventDiv.appendChild(card);
+        }
+        
+        const cards = document.querySelectorAll('.card');
+        for (const card of cards) {
+            card.addEventListener('click', (event) => {
+                if (cartasSelected.length != 2) {
+                    card.classList.toggle('selected');
+                    cartasSelected.push(card);
+                } 
+                    if (cartasSelected[0].textContent === cartasSelected[1].textContent) {
+                        ++contador;
+                        cartasSelected = [];
+                    } else {
+                        setTimeout(() => {
+                            cartasSelected[0].classList.toggle('selected');
+                            cartasSelected[1].classList.toggle('selected');
+                            cartasSelected = [];
+                        }, 500);
+                    }
+                console.log(contador);
+                console.log(cartasSelected);
+            });
+        }
+
+    </script>
+</body>
+</html>
