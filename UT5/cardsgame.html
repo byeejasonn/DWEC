@@ -45,6 +45,7 @@
         let opciones = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
         let cartasSelected = [];
         let contador = 0;
+        let block = false;
         opciones.sort(() => (Math.random() > .5) ? 1 : -1);
         
         for (let i = 0; i < opciones.length; i++) {
@@ -55,25 +56,42 @@
         }
         
         const cards = document.querySelectorAll('.card');
-        for (const card of cards) {
-            card.addEventListener('click', (event) => {
-                if (cartasSelected.length != 2) {
-                    card.classList.toggle('selected');
-                    cartasSelected.push(card);
-                } 
-                    if (cartasSelected[0].textContent === cartasSelected[1].textContent) {
-                        ++contador;
+        activeEvent();
+
+        function selecction(event) {
+            this.classList.add('selected');
+            cartasSelected.push(this);
+            
+            this.removeEventListener('click', selecction);
+            
+            if (cartasSelected.length == 2) {
+                removeEvent();
+                if (cartasSelected[0].textContent === cartasSelected[1].textContent) {
+                    contador++;
+                    cartasSelected = [];
+                } else {
+                    setTimeout(() => {
+                        cartasSelected[0].classList.remove('selected');
+                        cartasSelected[1].classList.remove('selected');
                         cartasSelected = [];
-                    } else {
-                        setTimeout(() => {
-                            cartasSelected[0].classList.toggle('selected');
-                            cartasSelected[1].classList.toggle('selected');
-                            cartasSelected = [];
-                        }, 500);
-                    }
-                console.log(contador);
-                console.log(cartasSelected);
-            });
+                    }, 1000);
+                }
+                setTimeout(() => {
+                    activeEvent()
+                }, 1000);
+            }
+        }
+
+        function activeEvent() {
+            for (const card of cards) {
+                card.addEventListener('click', selecction);
+            }
+        }
+        
+        function removeEvent() {
+            for (const card of cards) {
+                card.removeEventListener('click', selecction);
+            }    
         }
 
     </script>

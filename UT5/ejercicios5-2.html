@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios tema5</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    
+    <h2>Posición ratón respecto el navegador</h2>
+    <div class="event1"></div>
+    <h2>Posición ratón respecto la pantalla</h2>
+    <div class="event2"></div>
+
+    <script>
+        const event1 = document.querySelector('.event1');
+        const event2 = document.querySelector('.event2');
+
+        function pageRelative(event) {
+            event2.innerHTML = `x: ${event.screenX}, y: ${event.screenY}`
+        }
+
+        function clientRelative(event) {
+            event1.innerHTML = `x: ${event.clientX}, y: ${event.clientY}`
+        }
+
+        addEventListener('mousemove', pageRelative);
+        addEventListener('mousemove', clientRelative);
+        
+    </script>
+</body>
+</html>
