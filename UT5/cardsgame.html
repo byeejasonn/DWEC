@@ -15,24 +15,41 @@
             width: fit-content;
             margin: 60px auto;
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(5, minmax(200px, 1fr));
             gap: 40px 50px;
         }
 
         .card {
-            height: 200px;
-            width: 140px;
-            background: red;
+            height: 240px;
+            width: 180px;
             cursor: pointer;
             color: white;
             font-size: 24px;
             text-align: center;
-            line-height: 200px;
+            line-height: 240px;
             user-select: none;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background-image: url(./backface.jpg);
+            background-size: contain;
+            background-repeat: space;
+            background-position: center;
+            transform-style: preserve-3d;
+            transition: transform .5s ease;
         }
 
-        .selected {
+        .front {
+            transform: rotateY(180deg);
+            height: 100%;
+            width: 100%;
             background: blue;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            cursor: auto;
+        }
+
+        .flip {
+            transform: rotateY(180deg);
         }
     </style>
 </head>
@@ -41,39 +58,48 @@
 
     <script>
         const eventDiv = document.querySelector('.event-wrapper');
-        let jugadores = [];
-        let opciones = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
-        let cartasSelected = [];
+        let options = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
+        let pair = [];
+        let cardSelected = [];
         let contador = 0;
-        let block = false;
-        opciones.sort(() => (Math.random() > .5) ? 1 : -1);
+        options.sort(() => (Math.random() > .5) ? 1 : -1);
         
-        for (let i = 0; i < opciones.length; i++) {
+        for (let i = 0; i < options.length; i++) {
             card = document.createElement('div');
             card.classList.add('card');
-            card.innerHTML = opciones[i];
+
+            front = document.createElement('div');
+            front.classList.add('front');
+            front.innerHTML = options[i];
+
+            card.appendChild(front);
             eventDiv.appendChild(card);
         }
         
-        const cards = document.querySelectorAll('.card');
+        let cards = Array.from(document.querySelectorAll('.card'));
         activeEvent();
 
         function selecction(event) {
-            this.classList.add('selected');
-            cartasSelected.push(this);
+            this.classList.add('flip');
+            pair.push(this);
             
             this.removeEventListener('click', selecction);
             
-            if (cartasSelected.length == 2) {
+            if (pair.length == 2) {
                 removeEvent();
-                if (cartasSelected[0].textContent === cartasSelected[1].textContent) {
+                if (pair[0].textContent === pair[1].textContent) {
                     contador++;
-                    cartasSelected = [];
+                    cardSelected.push(...pair);
+
+                    // devuelve la diferencia de los arrays, si quitamos la "!" devuelve lo que tengan en
+                    cards = cards.filter(x => !cardSelected.includes(x));
+
+                    pair = [];
                 } else {
                     setTimeout(() => {
-                        cartasSelected[0].classList.remove('selected');
-                        cartasSelected[1].classList.remove('selected');
-                        cartasSelected = [];
+                        pair[0].classList.remove('flip');
+                        pair[1].classList.remove('flip');
+                        pair = [];
                     }, 1000);
                 }
                 setTimeout(() => {
