@@ -5,36 +5,89 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejercicios tema5</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .formulario {
+            width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .info {
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
-    <form action="">
+    <form action="" class="formulario">
         <label>
             Nombre: <br>
-            <input type="text" name="nombre" id="nombre">
+            <input type="text" name="nombre" id="nombre" required>
         </label>
-        <br>
+        <br><br>
         <label>
             Apellidos: <br>
-            <input type="text" name="apellidos" id="apellidos">
+            <input type="text" name="apellidos" id="apellidos" required>
         </label>
-        <br>
+        <br><br>
         <label>
-            <input type="radio" name="genero" id="hombre" value="hombre">
+            <input type="radio" name="genero" id="hombre" value="hombre" class="genero">
             Hombre
         </label>
 
         <label>
-            <input type="radio" name="genero" id="mujer" value="mujer">
+            <input type="radio" name="genero" id="mujer" value="mujer" class="genero">
             Mujer
         </label>
+        <br><br>
+
+        Elige un color: <br>
+        <label>
+            <input type="radio" name="color" id="rojo" value="red" class="color"> Rojo
+        </label>
+        <br>
+        <label>
+            <input type="radio" name="color" id="verde" value="green" class="color"> Verde
+        </label>
+        <br>
+        <label>
+            <input type="radio" name="color" id="azul" value="blue" class="color"> Azul 
+        </label>
+        <br>
         <br>
         <input type="submit" value="Enviar">
+        <div class="info"></div>
     </form>
 
+
     <script>
+        
+        const formulario = document.querySelector(".formulario");
         const submit = document.querySelector("input[type='submit']");
-        
-        
+        const info = document.querySelector(".info");
+        formulario.addEventListener('submit', e => {
+            e.preventDefault();
+            let nombre = document.getElementById("nombre").value;
+            let apellidos = document.getElementById("apellidos").value;
+            let genero = document.querySelector(".genero:checked");
+            let color = document.querySelector(".color:checked");
+
+            if (nombre !== '' && apellidos !== '' && genero !== null && color !== null) {
+                info.innerHTML = `
+                    Nombre: ${nombre} <br>
+                    Apellidos: ${apellidos} <br>
+                    Genero: ${genero.value}
+                `
+                formulario.style.backgroundColor = `${color.value}`
+            } else {
+                info.innerHTML = `
+                    Todos los campos tienen que estar rellenos
+                `
+            }
+        });
     </script>
 </body>
 </html>
