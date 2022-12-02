@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objetos</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="solucion"></div>
+    <script>
+        class Jugador {
+            constructor(nombre, edad, puntuacion) {
+                this.nombre = nombre;
+                this.edad = edad;
+                this.puntuacion = puntuacion;
+            }
+
+            getNombre() {
+                return this.nombre;
+            }
+
+            getEdad() {
+                return this.edad;
+            }
+
+            getPuntuacion() {
+                return this.puntuacion;
+            }
+
+            setNombre(nombre) {
+                this.nombre = nombre;
+            }
+
+            setEdad(edad) {
+                this.edad = edad;
+            }
+
+            setPuntuacion(puntuacion) {
+                this.puntuacion = puntuacion;
+            }
+
+            validarEdad() {
+                if(this.edad < 0) return 'La edad no puede ser negativa';
+                return 'Edad valida'
+            }
+        }
+
+        const solucion = document.querySelector('.solucion');
+
+        let jugador1 = new Jugador("Jason", 19, 300);
+        let jugador2 = new Jugador("Marcos", -21, 350);
+        solucion.innerHTML = `
+            Jugador1: <br>
+                ${jugador1.getNombre()} tiene ${jugador1.getPuntuacion()} (${jugador1.validarEdad()}) <br>
+                <br>
+            Jugador2: <br>
+                ${jugador2.getNombre()} tiene ${jugador2.getPuntuacion()} (${jugador2.validarEdad()}) <br>
+        `
+
+    </script>
+</body>
+</html>
