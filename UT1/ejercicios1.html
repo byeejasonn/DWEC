@@ -93,6 +93,8 @@
             const solucion = document.querySelector('.solucion2');
 
             let error = false;
+            // lo comentado es un intento con regex, es mejor para las validaciones
+            // let numero = document.getElementById('numero09999').value;
             let numero = parseInt(document.getElementById('numero09999').value);
             if(numero < 0 || numero > 9999 || isNaN(numero)) error = true;
 
@@ -103,6 +105,15 @@
             } else {
                 solucion.innerHTML = "Escriba un número valido"
             }
+
+            // if(/^[\d]{1,4}$/.test(numero)) {
+            //     solucion.innerHTML = `
+            //         El número tiene ${numero.toString().length} caracteres 
+            //     `
+            // } else {
+            //     solucion.innerHTML = "Escriba un número valido"
+            // }
+
         } 
 
         function ejercicio3() {
@@ -119,6 +130,8 @@
             } else {
                 solucion.innerHTML = "Escriba un número valido"
             }
+
+            
         }
 
         function ejercicio4() {

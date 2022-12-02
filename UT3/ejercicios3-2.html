@@ -27,7 +27,7 @@
         let date = new Date();
         let nextYear = new Date(`1/1/${date.getFullYear() + 1}`);
 
-        let days = Math.ceil((nextYear.getTime() - date.getTime()) / 86400000);
+        let days = Math.round((nextYear.getTime() - date.getTime()) / 86400000);
 
         solucion.innerHTML = `Quedan ${days} días para el siguiente año`;
     </script>
