@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios tema5</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .intentos {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="main">
+        <div class="ejercicio1">
+            <h3>Ejercicio1</h3>
+            <p>a) En Firefox se sigue encontrando en la carpeta home del usuario de forma como .firefox/.../cookies.*
+            </p>
+            <img src="./firefox.png" alt="ruta firefox">
+            <p>b) En Chrome se encuentra en la carpeta home del usuario en .config/google-chrome/Default</p>
+            <img src="./chrome.png" alt="ruta chrome">
+        </div>
+
+        <div class="ejercicio2">
+            <h3>Formulario dicográfico</h3>
+            <form class="form">
+                <div class="input">
+                    <label>Nombre del disco: <input type="text" name="disc" id="disc" placeholder="disco"></label>
+                </div>
+                <div class="input">
+                    <label>Nombre autor o grupo: <input type="text" name="author" id="author"
+                            placeholder="autor"></label>
+                </div>
+
+                <div class="input">
+                    Tipo de música: <br>
+                    <label><input type="radio" name="tipo" id="rock" value="rock" class="tipo">Rock</label><br>
+                    <label><input type="radio" name="tipo" id="pop" value="pop" class="tipo">Pop</label><br>
+                    <label><input type="radio" name="tipo" id="indie" value="indie" class="tipo">Indie</label><br>
+                </div>
+
+                <div class="input">
+                    Comentarios: <br>
+
+                    <textarea name="coment" id="coment" placeholder="--Comentario sobre el album--" cols="50"
+                        rows="10"></textarea>
+                </div>
+
+                <input type="submit" value="Enviar" id="enviar"> <input type="reset" value="Limpiar datos">
+            </form>
+        </div>
+    </main>
+
+    <script>
+        const form = document.querySelector(".form");
+        const intentos = document.createElement('div');
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        document.cookie = `intentos=${getCookie("intentos")}`;
+
+        intentos.classList.add('intentos');
+
+        form.addEventListener('submit', (e) => {
+            console.log(document.cookie);
+            e.preventDefault();
+
+            if (form.contains(intentos)) intentos.remove();
+
+            const disc = document.getElementById("disc").value;
+            const author = document.getElementById("author").value;
+            const tipo = document.querySelector(".tipo:checked");
+
+            const discRegex = /^[\w]{1,25}$/;
+            const authorRegex = /^[A-Z-_]([a-zA-Z]){0,24}$/;
+
+            // comprobamos que los campos son validos mediante regex y el radio comprobando si es nulo o no
+            if (discRegex.test(disc) && authorRegex.test(author) && tipo !== null) {
+                alert(`
+                    Nombre del disco: ${disc}
+                    Nombre autor: ${author}
+                    Tipo: ${tipo.value}
+                    `);
+            } else {
+                document.cookie = `intentos=${parseInt(getCookie("intentos"))+1}`;
+                intentos.innerHTML = `intentos ${getCookie("intentos")}`;
+                form.appendChild(intentos);
+            }
+        });
+
+    </script>
+</body>
+
+</html>
