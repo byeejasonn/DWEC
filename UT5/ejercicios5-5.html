@@ -82,8 +82,9 @@
             document.cookie = cname + "=" + cvalue;
         }
 
-        setCookie("intentos", 0);
-        document.cookie = `intentos=${getCookie("intentos")}`;
+        console.log(getCookie("intentos"));
+
+        setCookie("intentos", (!isNaN(getCookie("intentos")))?getCookie("intentos"):0);
 
         intentos.classList.add('intentos');
 
@@ -108,7 +109,7 @@
                     Tipo: ${tipo.value}
                     `);
             } else {
-                document.cookie = `intentos=${parseInt(getCookie("intentos")) + 1}`;
+                setCookie("intentos", parseInt(getCookie("intentos"))+1);
                 intentos.innerHTML = `intentos ${getCookie("intentos")}`;
                 form.appendChild(intentos);
             }
