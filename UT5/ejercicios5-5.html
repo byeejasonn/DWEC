@@ -78,6 +78,11 @@
             return "";
         }
 
+        function setCookie(cname, cvalue) {
+            document.cookie = cname + "=" + cvalue;
+        }
+
+        setCookie("intentos", 0);
         document.cookie = `intentos=${getCookie("intentos")}`;
 
         intentos.classList.add('intentos');
@@ -103,10 +108,11 @@
                     Tipo: ${tipo.value}
                     `);
             } else {
-                document.cookie = `intentos=${parseInt(getCookie("intentos"))+1}`;
+                document.cookie = `intentos=${parseInt(getCookie("intentos")) + 1}`;
                 intentos.innerHTML = `intentos ${getCookie("intentos")}`;
                 form.appendChild(intentos);
             }
+            console.log(getCookie("intentos"));
         });
 
     </script>
