@@ -17,11 +17,11 @@ El DOM representa el documento como un árbol de nodos, donde cada nodo represen
 
 Un ejemplo de árbol de nodos sería algo como esto:
 
-![árbol de nodos](ejemplos\arbolNodos.png)
+![árbol de nodos](ejemplos/arbolNodos.png)
 
 Que en HTML sería algo como:
 
-![árbol de nodos HTML](ejemplos\arbolNodosHtml.png)
+![árbol de nodos HTML](ejemplos/arbolNodosHtml.png)
 
 ### Tipos de nodos
 
