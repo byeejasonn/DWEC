@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios DOM</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .input__checkbox {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <label for="numero">
+            Número de checkbox 
+            <input type="text" name="numero" id="numero">
+        </label>
+        <button class="btn">Crear Checkbox</button>
+    </div>
+
+    <div class="solucion">
+
+    </div>
+
+    <script>
+
+        const contenedor = document.querySelector('.contenedor');
+        const numero = document.querySelector('#numero');
+        const btn = document.querySelector('.btn');
+
+        const solucion = document.querySelector('.solucion');
+
+        btn.addEventListener('click', () => {
+            console.log(numero.value);
+            if (/^[0-9]+$/.test(numero.value)) {
+                let numero_inputs = parseInt(numero.value);
+
+                for (let i = 0; i < numero_inputs; i++) {
+                    let value = Math.random();
+
+                    const div = document.createElement('div');
+                    div.classList.add('input__checkbox')
+
+                    const label = document.createElement('label');
+                    const checkbox = document.createElement('input');
+
+                    checkbox.setAttribute('type', 'checkbox');
+                    checkbox.setAttribute('name', 'ipnuts');
+                    checkbox.setAttribute('id', 'ipnuts');
+                    checkbox.setAttribute('value', value);
+                    
+                    label.appendChild(checkbox);
+                    label.innerHTML += value;
+                    
+                    div.appendChild(label);
+
+                    solucion.appendChild(div);
+                }
+            }
+        });
+        
+    </script>
+</body>
+</html>
