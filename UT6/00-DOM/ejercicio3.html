@@ -41,6 +41,12 @@
             if (/^[0-9]+$/.test(numero.value)) {
                 let numero_inputs = parseInt(numero.value);
 
+                if (solucion.childNodes.length > 1) {
+                    while (solucion.firstChild) {
+                        solucion.removeChild(solucion.firstChild);
+                    }
+                }
+
                 for (let i = 0; i < numero_inputs; i++) {
                     let value = Math.random();
 
