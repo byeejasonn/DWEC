@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios DOM</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h3 class="titulo">Este es un titulo dinámico</h3>
+        <button class="color">Cambiar color</button>
+        <button class="size">Cambiar tamaño fuente</button>
+    </div>
+
+    <script>
+        
+        const titulo = document.querySelector('.titulo');
+
+        const colores = {
+            rojo: '#e74c3c',
+            verde: '#45b39d',
+            azul: '#5dade2',
+            negro: '#17202a'
+        }
+
+        const sizes = {
+            sm: '18px',
+            md: '22px',
+            lg: '24px',
+            xl: '28px'
+        }
+
+        const btnColor = document.querySelector('.color');
+        const btnSize = document.querySelector('.size');
+
+        btnColor.addEventListener('click', () => {
+            let clave = ~~(Math.random() * 4);
+
+            titulo.style.color = colores[Object.keys(colores)[clave]]
+        });
+
+        btnSize.addEventListener('click', () => {
+            let clave = ~~(Math.random() * 4);
+
+            titulo.style.fontSize = sizes[Object.keys(sizes)[clave]]
+        });
+
+    </script>
+</body>
+</html>
