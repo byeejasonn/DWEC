@@ -110,10 +110,13 @@
 			const nombre = document.querySelectorAll(".nombre");
 			const apellidos = document.querySelectorAll(".apellidos");
 			const dni = document.querySelectorAll(".dni");
-			const estudios = document.querySelectorAll(".estudios > input:checked");
+			const estudios = document.querySelectorAll(".estudios input");
 
 			const table = document.querySelector(".table");
 
+			let invalido = false;
+
+			// aplicamos validacinoes a los campos
 			for (const n of nombre) {
 				validateText(n);
 			}
@@ -124,13 +127,32 @@
 
 			for (const n of dni) {
 				validateDni(n);
-				console.log(formInsert.contains(n));
 			}
 
-			console.log(estudios);
-
 			for (const n of estudios) {
-				console.log(n);
+				validateCheckbox(n);
+			}
+
+			function validateCheckbox(n) {
+				const help = document.createElement("p");
+				const field = n.parentNode.parentNode.parentNode;
+				n.addEventListener("change", function () {
+					const estudiosChecked = document.querySelectorAll(".estudios input:checked");
+
+					if (field.contains(field.querySelector(".help"))) {
+						field.querySelector(".help").remove();
+					}
+					if (estudiosChecked.length === 0) {
+						invalido = true;
+						help.classList = "help is-danger";
+						help.innerText = `${field.querySelector(".label").textContent} debe tener minimo una opcion selecionada`;
+
+						field.appendChild(help);
+					} else {
+						help.remove();
+						invalido = false;
+					}
+				});
 			}
 
 			function validateText(n) {
@@ -147,16 +169,21 @@
 						help.classList = "help is-success";
 						help.innerText = `${control.parentNode.querySelector(".label").textContent} válido`;
 						control.appendChild(help);
+
+						invalido = false;
 					} else if (n.value === "") {
 						n.classList = "input";
 
 						help.remove();
+						invalido = true;
 					} else {
 						n.classList = "input is-danger";
 
 						help.classList = "help is-danger";
 						help.innerText = `${control.parentNode.querySelector(".label").textContent} no válido`;
 						control.appendChild(help);
+
+						invalido = true;
 					}
 				});
 			}
@@ -168,43 +195,79 @@
 				let users = await fetchUsers();
 
 				n.addEventListener("keyup", e => {
-					console.log(users.filter(user => user.dni === n.value).length);
 					if (control.contains(control.querySelector(".help"))) {
 						control.querySelector(".help").remove();
 					}
 
-					// && formInsert.contains(n) ? users.filter(user => user.dni === n.value).length === 0 : true
+					if (formInsert.contains(n)) {
+						if (/(^[XYZ][0-9]{7}[A-Z]{1}$)|(^[0-9]{8}[A-Z]{1}$)/.test(n.value) && users.filter(user => user.dni === n.value).length === 0) {
+							n.classList = "input is-primary";
 
-					if (/(^[XYZ][0-9]{7}[A-Z]{1}$)|(^[0-9]{8}[A-Z]{1}$)/.test(n.value)) {
-						n.classList = "input is-primary";
+							help.classList = "help is-success";
+							help.innerText = `${control.parentNode.querySelector(".label").textContent} válido`;
+							control.appendChild(help);
 
-						help.classList = "help is-success";
-						help.innerText = `${control.parentNode.querySelector(".label").textContent} válido`;
-						control.appendChild(help);
-					} else if (n.value === "") {
-						n.classList = "input";
+							invalido = false;
+						} else if (n.value === "") {
+							n.classList = "input";
 
-						help.remove();
+							help.remove();
+
+							invalido = true;
+						} else {
+							n.classList = "input is-danger";
+
+							help.classList = "help is-danger";
+							help.innerText = `${control.parentNode.querySelector(".label").textContent} no válido`;
+							control.appendChild(help);
+
+							invalido = true;
+						}
 					} else {
-						n.classList = "input is-danger";
+						if (/(^[XYZ][0-9]{7}[A-Z]{1}$)|(^[0-9]{8}[A-Z]{1}$)/.test(n.value)) {
+							n.classList = "input is-primary";
 
-						help.classList = "help is-danger";
-						help.innerText = `${control.parentNode.querySelector(".label").textContent} no válido`;
-						control.appendChild(help);
+							help.classList = "help is-success";
+							help.innerText = `${control.parentNode.querySelector(".label").textContent} válido`;
+							control.appendChild(help);
+
+							invalido = false;
+						} else if (n.value === "") {
+							n.classList = "input";
+
+							help.remove();
+
+							invalido = true;
+						} else {
+							n.classList = "input is-danger";
+
+							help.classList = "help is-danger";
+							help.innerText = `${control.parentNode.querySelector(".label").textContent} no válido`;
+							control.appendChild(help);
+
+							invalido = true;
+						}
 					}
 				});
 			}
 
+			// eventos de submit de los formularios de insert y de delete
 			formInsert.addEventListener("submit", async e => {
 				e.preventDefault();
 
-				await fetch("conn.php", {
-					method: "post",
-					body: new FormData(formInsert)
-				})
-					.then(response => response.json())
-					.then(data => console.log(data))
-					.catch(e => console.log(e));
+				console.log(new FormData(formInsert));
+
+				if (!invalido) {
+					await fetch("conn.php", {
+						method: "post",
+						body: new FormData(formInsert)
+					})
+						.then(response => response.json())
+						.then(data => console.log(data))
+						.catch(e => console.log(e));
+				} else {
+					alert("Los datos introducidos no cumplen los requisitos");
+				}
 
 				location.reload();
 			});
@@ -212,16 +275,19 @@
 			formDelete.addEventListener("submit", async e => {
 				e.preventDefault();
 
-				await fetch("conn.php", {
-					method: "post",
-					body: new FormData(formDelete)
-				})
-					.then(response => response.json())
-					.then(data => console.log(data));
+				if (!invalido) {
+					await fetch("conn.php", {
+						method: "post",
+						body: new FormData(formDelete)
+					})
+						.then(response => response.json())
+						.then(data => console.log(data));
+				}
 
 				location.reload();
 			});
 
+			// al cargar la pagina creamos la tabla en la que aparecen los usuarios existentes en la base de datos
 			window.addEventListener("DOMContentLoaded", async e => {
 				let users = await fetchUsers();
 
@@ -237,6 +303,7 @@
 				}
 			});
 
+			// funcion con la que recuperamos TODOS los usuarios de la base de datos
 			async function fetchUsers() {
 				users = await fetch("conn.php").then(response => response.json());
 				return users;

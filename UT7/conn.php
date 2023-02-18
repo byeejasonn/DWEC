@@ -1,9 +1,11 @@
 <?php
 
+// conexion a la base de datos
 $conn = new PDO('mysql:dbname=dwec;host=localhost', 'byeejasonn', '1234', [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ]);
 
+// indicacion del contenido en formato json
 header('Content-Type: application/json');
 
 $stmt = $conn->prepare("SELECT * FROM users");
@@ -13,6 +15,7 @@ $stmt->execute();
 $users = $stmt->fetchAll();
 
 $error = false;
+// si es insertar comprobamos que los datos no estan vacios para asi poder guardarlos en la base de datos
 if (isset($_POST['enviar'])) {
 
     if (empty($_POST['nombre']) || empty($_POST['apellidos']) || empty($_POST['dni']) || empty($_POST['estudios'])) {
@@ -40,6 +43,8 @@ if (isset($_POST['enviar'])) {
     }
 }
 
+// para borrar el usuario simplemente ejecutamos el delete y se captura el error si lo hubiera pero no se informa de nada
+// ya que es informacion extra al usuarios sobre la base de datos
 if (isset($_POST['borrar'])) {
 
     if (empty($_POST['dni'])) {
@@ -60,4 +65,5 @@ if (isset($_POST['borrar'])) {
     }
 }
 
+// devolvemos todos los usuarios en formatos json para luego recuperarlo desde js
 echo json_encode($users);
